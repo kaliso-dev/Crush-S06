@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <title>Crush S06</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #F59CA9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #371E30;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #DF57BC;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s, border 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #A03E99;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+            min-height: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 16px;
+            }
+            #result {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+        <h1>Compatibilité de la Classe S06</h1>
+        <p>Entrez deux prénoms pour voir leur taux de compatibilité :</p>
+        
+        <input type="text" id="prenom1" placeholder="Prénom 1">
+        <input type="text" id="prenom2" placeholder="Prénom 2">
+        <button onclick="verifierCompatibilite()">Vérifier Compatibilité</button>
+        
+        <div id="result"></div>
+    </div> 
+
+    <script>
+        // Liste des couples spécifiés
+        const couplesSpecifiques = [
+
+            ["clément", "noah"],
+            ["noah", "clément"],
+            ["clément", "thomas"],
+            ["thomas", "clément"],
+            ["clément", "sofiene"],
+            ["sofiene", "clément"],
+            ["clément", "briac"],
+            ["briac", "clément"],
+            ["clément", "gabriel"],
+            ["gabriel", "clément"],
+            ["clément", "jules"],
+            ["jules", "clément"],
+            ["clément", "arthur"],
+            ["arthur", "clément"],
+            ["clément", "vadim"],
+            ["vadim", "clément"],
+            ["clément", "hyacinthe"],
+            ["hyacinthe", "clément"],
+            ["noah", "thomas"],
+            ["thomas", "noah"],
+            ["noah", "sofiene"],
+            ["sofiene", "noah"],
+            ["noah", "briac"],
+            ["briac", "noah"],
+            ["noah", "gabriel"],
+            ["gabriel", "noah"],
+            ["noah", "jules"],
+            ["jules", "noah"],
+            ["noah", "arthur"],
+            ["arthur", "noah"],
+            ["noah", "vadim"],
+            ["vadim", "noah"],
+            ["noah", "hyacinthe"],
+            ["hyacinthe", "noah"],
+            ["thomas", "sofiene"],
+            ["sofiene", "thomas"],
+            ["thomas", "briac"],
+            ["briac", "thomas"],
+            ["thomas", "gabriel"],
+            ["gabriel", "thomas"],
+            ["thomas", "jules"],
+            ["jules", "thomas"],
+            ["thomas", "arthur"],
+            ["arthur", "thomas"],
+            ["thomas", "vadim"],
+            ["vadim", "thomas"],
+            ["thomas", "hyacinthe"],
+            ["hyacinthe", "thomas"],
+            ["sofiene", "briac"],
+            ["briac", "sofiene"],
+            ["sofiene", "gabriel"],
+            ["gabriel", "sofiene"],
+            ["sofiene", "jules"],
+            ["jules", "sofiene"],
+            ["sofiene", "arthur"],
+            ["arthur", "sofiene"],
+            ["sofiene", "vadim"],
+            ["vadim", "sofiene"],
+            ["sofiene", "hyacinthe"],
+            ["hyacinthe", "sofiene"],
+            ["briac", "gabriel"],
+            ["gabriel", "briac"],
+            ["briac", "jules"],
+            ["jules", "briac"],
+            ["briac", "arthur"],
+            ["arthur", "briac"],
+            ["briac", "vadim"],
+            ["vadim", "briac"],
+            ["briac", "hyacinthe"],
+            ["hyacinthe", "briac"],
+            ["gabriel", "jules"],
+            ["jules", "gabriel"],
+            ["gabriel", "arthur"],
+            ["arthur", "gabriel"],
+            ["gabriel", "vadim"],
+            ["vadim", "gabriel"],
+            ["gabriel", "hyacinthe"],
+            ["hyacinthe", "gabriel"],
+            ["jules", "arthur"],
+            ["arthur", "jules"],
+            ["jules", "vadim"],
+            ["vadim", "jules"],
+            ["jules", "hyacinthe"],
+            ["hyacinthe", "jules"],
+            ["arthur", "vadim"],
+            ["vadim", "arthur"],
+            ["arthur", "hyacinthe"],
+            ["hyacinthe", "arthur"],
+            ["vadim", "hyacinthe"],
+            ["hyacinthe", "vadim"]
+            ["jules faure-cigagna", "susanne"]
+            ["susanne", "jules faure-cigagna"]
+            ["jules", "susanne"]
+            ["susanne", "jules"]
+            ["jules", "tecla"]
+            ["tecla", "jules"]
+            ["jules faure-cigagna", "tecla"]
+            ["tecla", "jules faure-cigagna"]
+            ["kakhi", "romy"]
+            ["romy", "kakhi"]
+            ["vadim", "adele"]
+            ["adele", "vadim"]
+            
+    ]
+
+        // Fonction de hachage simple pour générer une valeur cohérente
+        function generateHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                hash = hash & hash; // Convertir en entier 32 bits
+            }
+            return Math.abs(hash);
+        }
+
+        function verifierCompatibilite() {
+            let prenom1 = document.getElementById('prenom1').value.trim().toLowerCase();
+            let prenom2 = document.getElementById('prenom2').value.trim().toLowerCase();
+
+            if (!prenom1 || !prenom2) {
+                document.getElementById('result').innerText = "Entrez deux prénoms !";
+                return;
+            }
+
+            // Créer un tableau trié pour assurer la cohérence (indépendamment de l'ordre)
+            const paire = [prenom1, prenom2].sort();
+
+            // Vérifier si la paire est dans les couples spécifiques
+            const estCoupleSpecifique = couplesSpecifiques.some(couple => {
+                return couple[0] === paire[0] && couple[1] === paire[1];
+            });
+
+            let pourcentage;
+            if (estCoupleSpecifique) {
+                pourcentage = 100;  // 100% pour les couples spécifiques
+            } else {
+                // Générer une valeur de compatibilité basée sur le hachage
+                const hash = generateHash(paire.join('-'));
+                pourcentage = hash % 101;  // Pourcentage entre 0 et 100
+            }
+
+            // Messages basés sur le pourcentage
+            let message;
+            if (pourcentage < 20) {
+                message = "Aïe, mieux vaut rester amis 😅";
+            } else if (pourcentage < 50) {
+                message = "Ça pourrait marcher avec un peu d'effort 🤔";
+            } else if (pourcentage < 75) {
+                message = "Belle alchimie, pourquoi pas ? 😏";
+            } else {
+                message = "Le couple parfait ! 😍";
+            }
+
+            // Mettre en majuscule la première lettre de chaque prénom
+            const formatPrenom = (prenom) => prenom.charAt(0).toUpperCase() + prenom.slice(1);
+
+            document.getElementById('result').innerText = `${formatPrenom(prenom1)} et ${formatPrenom(prenom2)} : ${pourcentage}% - ${message}`;
+        }
+    </script>
+</body>
+</html>
