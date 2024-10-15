@@ -104,56 +104,58 @@ const couplesSpecifiques = [
 ];
 
 
-        // Fonction de hachage simple pour générer une valeur cohérente
-        function generateHash(str) {
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                hash = str.charCodeAt(i) + ((hash << 5) - hash);
-                hash = hash & hash; // Convertir en entier 32 bits
-            }
-            return Math.abs(hash);
-        }
 
-        function verifierCompatibilite() {
-            let prenom1 = document.getElementById('prenom1').value.trim().toLowerCase();
-            let prenom2 = document.getElementById('prenom2').value.trim().toLowerCase();
 
-            if (!prenom1 || !prenom2) {
-                document.getElementById('result').innerText = "Entrez deux prénoms !";
-                return;
-            }
+// Fonction de hachage simple pour générer une valeur cohérente
+function generateHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        hash = hash & hash; // Convertir en entier 32 bits
+    }
+    return Math.abs(hash);
+}
 
-            // Créer un tableau trié pour assurer la cohérence (indépendamment de l'ordre)
-            const paire = [prenom1, prenom2].sort();
+function verifierCompatibilite() {
+    let prenom1 = document.getElementById('prenom1').value.trim().toLowerCase();
+    let prenom2 = document.getElementById('prenom2').value.trim().toLowerCase();
 
-            // Vérifier si la paire est dans les couples spécifiques
-            const estCoupleSpecifique = couplesSpecifiques.some(couple => {
-                return couple[0] === paire[0] && couple[1] === paire[1];
-            });
+    if (!prenom1 || !prenom2) {
+        document.getElementById('result').innerText = "Entrez deux prénoms !";
+        return;
+    }
 
-            let pourcentage;
-            if (estCoupleSpecifique) {
-                pourcentage = 100;  // 100% pour les couples spécifiques
-            } else {
-                // Générer une valeur de compatibilité basée sur le hachage
-                const hash = generateHash(paire.join('-'));
-                pourcentage = hash % 101;  // Pourcentage entre 0 et 100
-            }
+    // Créer un tableau trié pour assurer la cohérence (indépendamment de l'ordre)
+    const paire = [prenom1, prenom2].sort();
 
-            // Messages basés sur le pourcentage
-            let message;
-            if (pourcentage < 20) {
-                message = "Aïe, mieux vaut rester amis 😅";
-            } else if (pourcentage < 50) {
-                message = "Ça pourrait marcher avec un peu d'effort 🤔";
-            } else if (pourcentage < 75) {
-                message = "Belle alchimie, pourquoi pas ? 😏";
-            } else {
-                message = "Le couple parfait ! 😍";
-            }
+    // Vérifier si la paire est dans les couples spécifiques
+    const estCoupleSpecifique = couplesSpecifiques.some(couple => {
+        return couple[0] === paire[0] && couple[1] === paire[1];
+    });
 
-            // Mettre en majuscule la première lettre de chaque prénom
-            const formatPrenom = (prenom) => prenom.charAt(0).toUpperCase() + prenom.slice(1);
+    let pourcentage;
+    if (estCoupleSpecifique) {
+        pourcentage = 100;  // 100% pour les couples spécifiques
+    } else {
+        // Générer une valeur de compatibilité basée sur le hachage
+        const hash = generateHash(paire.join('-'));
+        pourcentage = hash % 101;  // Pourcentage entre 0 et 100
+    }
 
-            document.getElementById('result').innerText = `${formatPrenom(prenom1)} et ${formatPrenom(prenom2)} : ${pourcentage}% - ${message}`;
-        }
+    // Messages basés sur le pourcentage
+    let message;
+    if (pourcentage < 20) {
+        message = "Aïe, mieux vaut rester amis 😅";
+    } else if (pourcentage < 50) {
+        message = "Ça pourrait marcher avec un peu d'effort 🤔";
+    } else if (pourcentage < 75) {
+        message = "Belle alchimie, pourquoi pas ? 😏";
+    } else {
+        message = "Le couple parfait ! 😍";
+    }
+
+    // Mettre en majuscule la première lettre de chaque prénom
+    const formatPrenom = (prenom) => prenom.charAt(0).toUpperCase() + prenom.slice(1);
+
+    document.getElementById('result').innerText = `${formatPrenom(prenom1)} et ${formatPrenom(prenom2)} : ${pourcentage}% - ${message}`;
+}
